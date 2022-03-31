@@ -18,8 +18,12 @@ class _ScanQRState extends State<ScanQR> {
   Future _scanQR() async{
     try{
       ScanResult qrresutl = await BarcodeScanner.scan();
+      if(qrresutl==null){
+        Navigator.of(context).pop();
+      }
       setState(() {
         result=qrresutl.rawContent;
+
 
       });
     }on PlatformException catch(e){
@@ -55,6 +59,7 @@ class _ScanQRState extends State<ScanQR> {
         result='Unknown Error';
       });
     }
+    Navigator.of(context).pop();
   }
 
   @override

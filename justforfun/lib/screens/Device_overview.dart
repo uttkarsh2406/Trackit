@@ -24,12 +24,16 @@ class _LabOverviewState extends State<LabOverview> {
   Future _scanQR() async{
     try{
       ScanResult qrresutl = await BarcodeScanner.scan();
+      if(qrresutl.rawContent.length!=0) {
+        Navigator.of(context).pushNamed(
+            QrcodeResult.routename, arguments: qrresutl.rawContent);
+      }
       setState(() {
         result=qrresutl.rawContent;
-        Navigator.of(context).pushNamed(QrcodeResult.routename, arguments: result);
       });
     }on PlatformException catch(e){
       if(e.code==BarcodeScanner.cameraAccessDenied){
+        Navigator.of(context).pop();
         setState(() {
           result="Camera Permission is denied";
 
@@ -37,22 +41,32 @@ class _LabOverviewState extends State<LabOverview> {
 
       }
       else{
+
+        return;
         setState(() {
           result="Unknown Error";
 
         });
       }
-    } on FormatException catch(e){
+    }
+    on FormatException catch(e){
+      return;
+      Navigator.of(context).pop();
+
       setState(() {
 
         result='You Pressed The back button before scamming anything';
       });
     }
     catch (e){
+      return;
+      Navigator.of(context).pop();
+
       setState(() {
         result='Unknown Error';
       });
     }
+    // Navigator.of(context).pop();
   }
 
   // _ScanQrode;
