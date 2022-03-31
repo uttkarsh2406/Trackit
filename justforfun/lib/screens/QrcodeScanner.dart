@@ -15,14 +15,16 @@ class ScanQR extends StatefulWidget {
 class _ScanQRState extends State<ScanQR> {
   String result='Hey There !!!';
 
-  Future _scanQR()async{
+  Future _scanQR() async{
     try{
-      String qrresutl = await BarcodeScanner.scan().toString();
+      ScanResult qrresutl = await BarcodeScanner.scan();
       setState(() {
-        result=qrresutl;
+        result=qrresutl.rawContent;
+
       });
     }on PlatformException catch(e){
       if(e.code==BarcodeScanner.cameraAccessDenied){
+        Navigator.of(context).pop();
         setState(() {
           result="Camera Permission is denied";
 
@@ -30,6 +32,8 @@ class _ScanQRState extends State<ScanQR> {
 
       }
       else{
+        Navigator.of(context).pop();
+
         setState(() {
           result="Unknown Error";
 
@@ -37,12 +41,16 @@ class _ScanQRState extends State<ScanQR> {
       }
     }
     on FormatException catch(e){
+      Navigator.of(context).pop();
+
       setState(() {
 
         result='You Pressed The back button before scamming anything';
       });
     }
     catch (e){
+      Navigator.of(context).pop();
+
       setState(() {
         result='Unknown Error';
       });
@@ -55,12 +63,12 @@ class _ScanQRState extends State<ScanQR> {
     return Scaffold(
       appBar: AppBar(title: Text('QR code scanner'),),
      body: Center(
-       child: Text('mi'),
+       child: Text(result),
 
      ),
       floatingActionButton: FloatingActionButton.extended(onPressed:
         _scanQR
-      , label: Text(result),icon: Icon(Icons.camera_alt),),
+      , label: Text('hello'),icon: Icon(Icons.camera_alt),),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
