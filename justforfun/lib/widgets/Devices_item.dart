@@ -88,7 +88,9 @@ class LabItem extends StatelessWidget {
                             ),
                           ),
                           GestureDetector(
-                            onTap: (){},
+                            onTap: (){
+                              Provider.of<Devices>(context,listen: false).deleteDevice(wlab.id);
+                            },
                             child: RichText(text: TextSpan(
                               children:[
                                 WidgetSpan(child: Icon(Icons.delete,color: Theme.of(context).errorColor,),),

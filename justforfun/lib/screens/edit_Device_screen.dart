@@ -11,6 +11,8 @@ class EditLabScreen extends StatefulWidget {
   State<EditLabScreen> createState() => _State();
 }
 
+
+
 class _State extends State<EditLabScreen> {
   final _form = GlobalKey<FormState>();
   bool is_working=false;
@@ -48,14 +50,48 @@ class _State extends State<EditLabScreen> {
 
     }
     _form.currentState?.save();
-    Provider.of<Devices>(context,listen: false).addDevice(_editedDevice);
-    print(2);
+    if(_editedDevice.id!=null){
+      Provider.of<Devices>(context,listen: false).updateDevice(_editedDevice.id, _editedDevice);
+    }
+    else {
+      Provider.of<Devices>(context, listen: false).addDevice(_editedDevice);
+    }
     Navigator.of(context).pop();
 
 
   }
-  var _isint=true;
-  // void didChangeDependency(){
+  @override
+  void dispose() {
+    // observer.unsubscribe(this);
+    super.dispose();
+  }
+
+  bool _isint=true;
+  @override
+  void didChangeDependencies() {
+    print(123);
+    if(_isint){
+      final Device_id=ModalRoute.of(context)?.settings.arguments as String;
+      if(Device_id!=null) {
+        _editedDevice = Provider.of<Devices>(context, listen: false).findById(Device_id);
+        _init_values = {
+          'name': _editedDevice.name,
+          'isworking': _editedDevice.workingstatus.toString(),
+          'year_of_bought': _editedDevice.yearbought,
+          'expiry_date': _editedDevice.expiryDate,
+          'supplier_name': _editedDevice.supplierName,
+          'AMCdeadline': _editedDevice.AMCDeadline,
+          'category': _editedDevice.categry,
+
+
+        };
+      }
+    }
+    _isint=false;
+    super.didChangeDependencies();
+  }
+  @override
+  // void didChangeDependencies() {
   //   print(123);
   //   if(_isint){
   //     final Device_id=ModalRoute.of(context)?.settings.arguments as String;
@@ -77,30 +113,7 @@ class _State extends State<EditLabScreen> {
   //   _isint=false;
   //   super.didChangeDependencies();
   // }
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    print(123);
-    if(_isint){
-      final Device_id=ModalRoute.of(context)?.settings.arguments as String;
-      if(Device_id!=null) {
-        _editedDevice = Provider.of(context, listen: false).findById(Device_id);
-        _init_values = {
-          'name': _editedDevice.name,
-          'isworking': _editedDevice.workingstatus.toString(),
-          'year_of_bought': _editedDevice.yearbought,
-          'expiry_date': _editedDevice.expiryDate,
-          'supplier_name': _editedDevice.supplierName,
-          'AMCdeadline': _editedDevice.AMCDeadline,
-          'category': _editedDevice.categry,
 
-
-        };
-      }
-    }
-    _isint=false;
-    super.didChangeDependencies();
-  }
   @override
   Widget build(BuildContext context) {
     didChangeDependencies();

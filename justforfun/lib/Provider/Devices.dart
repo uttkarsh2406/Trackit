@@ -89,4 +89,19 @@ class Devices with ChangeNotifier{
     notifyListeners();
 
   }
+  void updateDevice(String id,Device d){
+    final index=_items.indexWhere((element) => element.id==id);
+    if(index>=0){
+      _items[index]=d;
+      notifyListeners();
+    }
+    else{
+      print('...');
+    }
+  }
+  void deleteDevice(String id){
+    _items.removeWhere((prod)=>prod.id==id);
+    notifyListeners();
+  }
+
 }

@@ -1,10 +1,13 @@
+
 import 'package:flutter/material.dart';
 import 'package:justforfun/screens/Device_overview.dart';
 import 'package:justforfun/screens/Device_detail_screen.dart';
 import 'package:justforfun/Provider/Devices.dart';
+import 'package:justforfun/screens/QrcodeScanner.dart';
 import 'package:provider/provider.dart';
 import 'package:justforfun/screens/edit_Device_screen.dart';
 import 'package:justforfun/screens/Qrcode_gen.dart';
+import 'package:justforfun/screens/Device_QR_code.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -21,6 +24,8 @@ class MyApp extends StatelessWidget {
         routes: {
           LabDetail.routename : (ctx)=> LabDetail(),
           EditLabScreen.routeName: (ctx) => EditLabScreen(),
+          DeviceQRCode.routename: (ctx) => DeviceQRCode(),
+          ScanQR.routename : (ctx) => ScanQR(),
         },
       ),
     );
