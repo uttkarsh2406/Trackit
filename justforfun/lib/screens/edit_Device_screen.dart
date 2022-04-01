@@ -50,7 +50,7 @@ class _State extends State<EditLabScreen> {
 
     }
     _form.currentState?.save();
-    if(_editedDevice.id!=null){
+    if(_editedDevice.id.length!=0){
       Provider.of<Devices>(context,listen: false).updateDevice(_editedDevice.id, _editedDevice);
     }
     else {
@@ -116,7 +116,6 @@ class _State extends State<EditLabScreen> {
 
   @override
   Widget build(BuildContext context) {
-    didChangeDependencies();
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Lab'),
