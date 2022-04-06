@@ -5,7 +5,6 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/scheduler.dart';
 class ScanQR extends StatefulWidget {
-  const ScanQR({Key? key}) : super(key: key);
   static const routename='/scan-qrcode';
 
   @override

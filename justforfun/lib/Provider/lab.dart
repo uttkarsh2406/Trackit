@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:justforfun/Model/labadmin.dart';
+import 'package:justforfun/Provider/labadmin.dart';
+import 'package:provider/provider.dart';
 
 class Lab with ChangeNotifier{
   final String id;
   final String labname;
   final String department;
-  LabAdmin admin;
+  final String username;
+  final String password;
 
   Lab({
-    required this.id,
-    required this.labname,
-    required this.department,
-    required this.admin,
+    this.id,
+    this.labname,
+    this.department,
+    this.username,
+    this.password,
 });
+
+
+
 }

@@ -3,6 +3,7 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:justforfun/Provider/Device.dart';
 import 'package:justforfun/screens/QRcodeScanResult.dart';
 import 'package:justforfun/screens/QrcodeScanner.dart';
+import 'package:justforfun/screens/edit_lab_screen.dart';
 import 'package:justforfun/widgets/Device_grid.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -12,19 +13,41 @@ import 'Device_detail_screen.dart';
 import 'edit_Device_screen.dart';
 import 'package:flutter/services.dart';
 
-class LabOverview extends StatefulWidget {
-  LabOverview({Key? key}) : super(key: key);
+import 'package:http/http.dart' as http;
+class DeviceOverView extends StatefulWidget {
+  static const routeName='/Deviceoverview';
 
   @override
-  State<LabOverview> createState() => _LabOverviewState();
+  State<DeviceOverView> createState() => _DeviceOverViewState();
 }
 
-class _LabOverviewState extends State<LabOverview> {
-  static const routename='/Device-overview';
+class _DeviceOverViewState extends State<DeviceOverView> {
 
+  var _initst=true;
   String result = 'Hey There !!!';
+  @override
+  // void initstate(){
+  //
+  //   Future.delayed(Duration.zero).then((_) {
+  //     Provider.of<Devices>(context).fetchdevice();
+  //   });
+  //   super.initState();
+  // }
+  void didChangeDependencies(){
+    if(_initst) {
+      Provider.of<Devices>(context).fetchdevice();
+    }
+    _initst=false;
+    super.didChangeDependencies();
+  }
+  Future<void> _refreshdevice(BuildContext context) async{
+    await Provider.of<Devices>(context,listen: false).fetchdevice();
+  }
+
+
 
   Future _scanQR() async {
+
     try {
       ScanResult qrresutl = await BarcodeScanner.scan();
       if (qrresutl.rawContent.length != 0) {
@@ -75,7 +98,7 @@ class _LabOverviewState extends State<LabOverview> {
         actions: <Widget>[
           IconButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(EditLabScreen.routeName);
+                Navigator.of(context).pushNamed(EditDeviceScreen.routeName);
               },
               icon: Icon(Icons.add)),
           IconButton(
@@ -87,7 +110,8 @@ class _LabOverviewState extends State<LabOverview> {
           }, icon: Icon(Icons.search))
         ],
       ),
-      body: Labgrid(),
+      body: RefreshIndicator(child: Devicegrid(),onRefresh:()=>_refreshdevice(context),),
+
     );
   }
 }
@@ -95,7 +119,7 @@ class _LabOverviewState extends State<LabOverview> {
 class MysearchDelegate extends SearchDelegate{
   List<Device> loaded_products;
   MysearchDelegate({
-    required this.loaded_products,
+     this.loaded_products,
 });
   List<String>searchTerms=[];
 
@@ -117,7 +141,7 @@ class MysearchDelegate extends SearchDelegate{
         matchQuery.add(i);
       }
     }
-    if(matchQuery.length>=0){
+    if(matchQuery.length>0){
       return ListView.builder(itemCount: matchQuery.length,itemBuilder: (context,i,){
         Device result=matchQuery[i];
         return Column(

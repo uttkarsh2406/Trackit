@@ -12,19 +12,19 @@ class Device with ChangeNotifier{
   final String supplierName;
   final String AMCDeadline;
   final String categry;
-  Lab labdetail;
+  final String labname;
 
 
 
   Device({
-    required this.id,
-    required this.name,
-    required this.workingstatus,
-    required this.yearbought,
-    required this.expiryDate,
-    required this.supplierName,
-    required this.AMCDeadline,
-    required this.categry,
-    required this.labdetail,
+     this.id,
+     this.name,
+     this.workingstatus,
+     this.yearbought,
+     this.expiryDate,
+     this.supplierName,
+     this.AMCDeadline,
+     this.categry,
+     this.labname,
   });
 }

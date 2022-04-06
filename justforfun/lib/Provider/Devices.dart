@@ -1,107 +1,132 @@
 import 'package:flutter/cupertino.dart';
 import 'package:justforfun/Provider/lab.dart';
+import 'package:justforfun/screens/Device_detail_screen.dart';
 import 'Device.dart';
-import 'package:justforfun/Model/labadmin.dart';
+import 'package:justforfun/Provider/labadmin.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 
-class Devices with ChangeNotifier{
-  List<Device>_items=[
-    Device(
-      id: '123',
-      name : 'Printer',
-      workingstatus: false,
-      yearbought: '29-03-2000',
-      expiryDate: '29-03-3000',
-      supplierName: 'Rishabh',
-      AMCDeadline: '29-03',
-      categry: 'Printer',
-      labdetail: Lab(id: '1234',labname: 'SSl',department: 'CSE',admin: LabAdmin(username:'a', password: 'a')),
+class Devices with ChangeNotifier {
+  final String authtoken;
+  List<Device> _items = [];
+  Devices(this.authtoken,this._items);
 
-    ),
-    Device(
-      id: '124',
-      name : 'Printer',
-      workingstatus: false,
-      yearbought: '29-03-2000',
-      expiryDate: '29-03-3000',
-      supplierName: 'Rishabh',
-      AMCDeadline: '29-03',
-      categry: 'Printer',
-      labdetail: Lab(id: '1234',labname: 'SSl',department: 'CSE',admin: LabAdmin(username:'a', password: 'a')),
-
-
-    ),
-    Device(
-      id: '125',
-      name : 'Printer',
-      workingstatus: false,
-      yearbought: '29-03-2000',
-      expiryDate: '29-03-3000',
-      supplierName: 'Rishabh',
-      AMCDeadline: '29-03',
-      categry: 'Printer',
-      labdetail: Lab(id: '1234',labname: 'SSl',department: 'CSE',admin: LabAdmin(username:'a', password: 'a')),
-
-
-    ),
-    Device(
-      id: '126',
-      name : 'Printer',
-      workingstatus: false,
-      yearbought: '29-03-2000',
-      expiryDate: '29-03-3000',
-      supplierName: 'Rishabh',
-      AMCDeadline: '29-03',
-      categry: 'Printer',
-      labdetail: Lab(id: '1234',labname: 'SSl',department: 'CSE',admin: LabAdmin(username:'a', password: 'a')),
-
-
-    ),
-    Device(
-      id: '127',
-      name : 'Printer',
-      workingstatus: false,
-      yearbought: '29-03-2000',
-      expiryDate: '29-03-3000',
-      supplierName: 'Rishabh',
-      AMCDeadline: '29-03',
-      categry: 'Printer',
-      labdetail: Lab(id: '1234',labname: 'SSl',department: 'CSE',admin: LabAdmin(username:'a', password: 'a')),
-
-    ),
-
-
-  ];
-
-  List<Device> get items{
+  List<Device> get items {
     return [..._items];
   }
-  Device findById(String id){
-    return _items.firstWhere((prod) => prod.id==id);
+
+  Device findById(String id) {
+    return _items.firstWhere((prod) => prod.id == id);
   }
 
-  void addDevice(Device device){
-    // items.add();
-    final newdevice=Device(id:'123'.toString(),name: device.name,workingstatus: device.workingstatus,yearbought: device.yearbought,expiryDate: device.expiryDate,AMCDeadline: device.AMCDeadline,supplierName: device.supplierName,categry: device.categry, labdetail: device.labdetail);
-    print(_items.length);
-    _items.add(newdevice);
-    print(_items.length);
-    notifyListeners();
 
-  }
-  void updateDevice(String id,Device d){
-    final index=_items.indexWhere((element) => element.id==id);
-    if(index>=0){
-      _items[index]=d;
+
+  Future<void> fetchdevice() async{
+    final url=Uri.parse('https://just-do-it-d98ab-default-rtdb.firebaseio.com/devices.json?auth=$authtoken');
+    try {
+      final value = await http.get(url);
+      final List<Device>loaded_devices=[];
+      final extdata=json.decode(value.body) as Map<String,dynamic>;
+      extdata.forEach((key, value) {
+        loaded_devices.add(Device(
+          id: key,
+          name: value['name'],
+          workingstatus: true,
+          yearbought: value['yearbought'],
+          expiryDate: value['expiryDate'],
+          AMCDeadline: value['AMCDeadline'],
+          categry: value['categry'],
+          supplierName: value['supplierName'],
+          labname: value['labname'],
+        ));
+      });
+      _items=loaded_devices;
       notifyListeners();
+
     }
-    else{
+    catch(error){
+      throw(error);
+    }
+  }
+  Future<void> addDevice(Device device) async {
+    final url = Uri.https(
+        'just-do-it-d98ab-default-rtdb.firebaseio.com', '/devices.json');
+    try {
+      final value = await http.post(
+        url,
+        body: json.encode(
+          {
+            'name': device.name,
+            'workingstatus': '1',
+            'yearbought': device.yearbought,
+            'expiryDate': device.expiryDate,
+            'AMCDeadline': device.AMCDeadline,
+            'supplierName': device.supplierName,
+            'categry': device.categry,
+            'labname':device.labname,
+          },
+        ),
+      );
+      // print(json.decode(value.body));
+      final newdevice = Device(
+        id: json.decode(value.body)['name'].toString().substring(2, 6),
+        name: device.name,
+        workingstatus: device.workingstatus,
+        yearbought: device.yearbought,
+        expiryDate: device.expiryDate,
+        AMCDeadline: device.AMCDeadline,
+        supplierName: device.supplierName,
+        categry: device.categry,
+        labname: device.labname,
+
+      );
+
+      _items.add(newdevice);
+      notifyListeners();
+    } catch (error) {
+      throw error;
+    }
+
+    // items.add();
+  }
+
+  Future<void> updateDevice(String id, Device d) async{
+
+    final index = _items.indexWhere((element) => element.id == id);
+    if (index >= 0) {
+      final url=Uri.parse('https://just-do-it-d98ab-default-rtdb.firebaseio.com/devices/$id.json');
+     try {
+       await http.patch(url, body: json.encode({
+         'name': d.name,
+         'workingstatus': '1',
+         'yearbought': d.yearbought,
+         'expiryDate': d.expiryDate,
+         'AMCDeadline': d.AMCDeadline,
+         'supplierName': d.supplierName,
+         'categry': d.categry,
+         'labname':d.labname,
+       }));
+       _items[index] = d;
+       notifyListeners();
+
+    }catch(error){
+       throw error;
+     }
+    } else {
       print('...');
     }
   }
-  void deleteDevice(String id){
-    _items.removeWhere((prod)=>prod.id==id);
+
+  void deleteDevice(String id) {
+    final url=Uri.parse('https://just-do-it-d98ab-default-rtdb.firebaseio.com/devices/$id.json');
+    final exitingpr=_items.indexWhere((element) => element.id==id);
+    final exitingdev=_items[exitingpr];
+    _items.remove(exitingdev);
+    http.delete(url).catchError((error){
+      _items.insert(exitingpr, exitingdev);
+      notifyListeners();
+    });
     notifyListeners();
   }
-
 }

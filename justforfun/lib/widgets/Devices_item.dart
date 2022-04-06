@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:justforfun/screens/edit_Device_screen.dart';
 import '../Provider/Devices.dart';
 
-class LabItem extends StatelessWidget {
+class DeviceItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final wlab = Provider.of<Device>(context);
@@ -29,7 +29,7 @@ class LabItem extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      'Device Id : ${wlab.id}',
+                      'Device Id : ${wlab.id.substring(1,5)}..',
                       style: TextStyle(height: 5, fontSize: 15),
                     )
                   ],
@@ -39,7 +39,7 @@ class LabItem extends StatelessWidget {
                   style: TextStyle(height: 2, fontSize: 15),
                 ),
                 Text(
-                  'Corresponding Lab : ${wlab.labdetail.labname}',
+                  'Corresponding Lab : ${wlab.labname}',
                   style: TextStyle(height: 2, fontSize: 15),
                 ),
                 Row(
@@ -70,7 +70,7 @@ class LabItem extends StatelessWidget {
 
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushNamed(EditLabScreen.routeName,
+                        Navigator.of(context).pushNamed(EditDeviceScreen.routeName,
                             arguments: wlab.id);
                       },
                       child: RichText(
@@ -105,7 +105,7 @@ class LabItem extends StatelessWidget {
                               ),
                             ),
                             TextSpan(
-                              text: "Delete Lab",
+                              text: "Delete item",
                               style: TextStyle(color: Colors.black),
                             ),
                           ],

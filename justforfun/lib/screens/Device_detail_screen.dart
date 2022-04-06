@@ -50,7 +50,7 @@ class LabDetail extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          'Lab id \: ${loadedProduct.id}',
+                          'Lab id \: ${loadedProduct.id.substring(1,4)}',
                           textAlign: TextAlign.start,
                           style: TextStyle(
                               height: 1,
