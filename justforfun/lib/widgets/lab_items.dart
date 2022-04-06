@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:justforfun/Provider/Device.dart';
 import 'package:justforfun/screens/edit_Device_screen.dart';
 import 'package:justforfun/screens/Device_detail_screen.dart';
+import 'package:justforfun/screens/edit_lab_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:justforfun/screens/edit_Device_screen.dart';
 import '../Provider/Devices.dart';
 import 'package:justforfun/Provider/Labs.dart';
 import 'package:justforfun/Provider/lab.dart';
+import 'package:justforfun/screens/Lab_detail_screen.dart';
 class LabItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -67,7 +69,7 @@ class LabItem extends StatelessWidget {
 
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushNamed(EditDeviceScreen.routeName,
+                        Navigator.of(context).pushNamed(EditLabScreen.routeName,
                             arguments: wlab1.id);
                       },
                       child: RichText(
@@ -89,8 +91,8 @@ class LabItem extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Provider.of<Devices>(context, listen: false)
-                            .deleteDevice(wlab1.id);
+                        Provider.of<Labs>(context, listen: false)
+                            .deleteLab(wlab1.id);
                       },
                       child: RichText(
                         text: TextSpan(

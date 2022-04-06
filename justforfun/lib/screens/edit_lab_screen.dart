@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:justforfun/Provider/Device.dart';
 import 'package:justforfun/Provider/lab.dart';
 import 'package:justforfun/Provider/labadmin.dart';
+import 'package:justforfun/Provider/labadmins.dart';
 import 'package:provider/provider.dart';
 import '../Provider/Labs.dart';
 import 'package:justforfun/Provider/Labs.dart';
@@ -20,6 +21,10 @@ class _State extends State<EditLabScreen> {
     labname: '',
     department: '',
     username: '',
+    password: '',
+  );
+  var _editedadmin=LabAdmin(
+    username:'',
     password: '',
   );
 
@@ -46,7 +51,8 @@ class _State extends State<EditLabScreen> {
       Navigator.of(context).pop();
     } else {
       Provider.of<Labs>(context, listen: false)
-          .addLab(_editedLab)
+          .addLab(_editedLab).then((value) {Provider.of<LabAdmins>(context).addadmin(_editedadmin);},
+      )
           .catchError((error) {
         return showDialog(
           context: context,
@@ -81,10 +87,10 @@ class _State extends State<EditLabScreen> {
   @override
   void didChangeDependencies() {
     if (_isint) {
-      final Device_id = ModalRoute.of(context)?.settings.arguments as String;
-      if (Device_id != null) {
+      final lab_id = ModalRoute.of(context)?.settings.arguments as String;
+      if (lab_id != null) {
         _editedLab =
-            Provider.of<Labs>(context, listen: false).findbyid(Device_id);
+            Provider.of<Labs>(context, listen: false).findbyid(lab_id);
         _init_values = {
           'labname': _editedLab.labname,
           'department': _editedLab.department,
@@ -144,7 +150,7 @@ class _State extends State<EditLabScreen> {
                 child: ListView(
                   children: <Widget>[
                     TextFormField(
-                      initialValue: _init_values['name'],
+                      initialValue: _init_values['labname'],
                       decoration: InputDecoration(labelText: 'Lab Name'),
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) {},
@@ -165,7 +171,7 @@ class _State extends State<EditLabScreen> {
                       },
                     ),
                     TextFormField(
-                      initialValue: _init_values['year_of_bought'],
+                      initialValue: _init_values['department'],
                       decoration: InputDecoration(labelText: 'Department'),
                       textInputAction: TextInputAction.next,
                       validator: (value) {
@@ -187,7 +193,7 @@ class _State extends State<EditLabScreen> {
                       },
                     ),
                     TextFormField(
-                      initialValue: _init_values['expiry_date'],
+                      initialValue: _init_values['username'],
                       decoration:
                           InputDecoration(labelText: 'Lab Admin Username'),
                       textInputAction: TextInputAction.next,
@@ -211,10 +217,14 @@ class _State extends State<EditLabScreen> {
                           username: va.toString(),
                           password: _editedLab.password,
                         );
+                        _editedadmin=LabAdmin(
+                          username: va.toString(),
+                          password: _editedadmin.password,
+                        );
                       },
                     ),
                     TextFormField(
-                      initialValue: _init_values['category'],
+                      initialValue: _init_values['password'],
                       decoration:
                           InputDecoration(labelText: 'Lab Admin Password'),
                       textInputAction: TextInputAction.next,
@@ -230,6 +240,10 @@ class _State extends State<EditLabScreen> {
                           labname: _editedLab.labname,
                           department: _editedLab.department,
                           username: _editedLab.username,
+                          password: va.toString(),
+                        );
+                        _editedadmin=LabAdmin(
+                          username: _editedadmin.username,
                           password: va.toString(),
                         );
                       },

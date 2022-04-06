@@ -4,11 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:justforfun/Provider/Devices.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class LabDetail extends StatelessWidget {
+class DeviceDetail extends StatelessWidget {
   // final String title;
   // LabDetail(this.title);
   String hel = '';
-  static const routename = '/Lab-detail';
+  static const routename = '/Device-detail';
   @override
   Widget build(BuildContext context) {
     final Device_id = ModalRoute.of(context)?.settings.arguments as String;
@@ -34,7 +34,7 @@ class LabDetail extends StatelessWidget {
                   child: Container(
                     margin: EdgeInsets.all(10),
                     child: Text(
-                      'Lab Name : ${loadedProduct.name}',
+                      'Device Name : ${loadedProduct.name}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           height: 1,
@@ -50,7 +50,7 @@ class LabDetail extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          'Lab id \: ${loadedProduct.id.substring(1,4)}',
+                          'Device id \: ${loadedProduct.id.substring(1,4)}',
                           textAlign: TextAlign.start,
                           style: TextStyle(
                               height: 1,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:justforfun/screens/Device_overview.dart';
 import 'package:justforfun/screens/auth_screen_labadmin.dart';
 import 'package:justforfun/screens/auth_screen_superadmin.dart';
+import 'package:justforfun/screens/device_overviewforstudents.dart';
 import 'package:provider/provider.dart';
 class  Homepage extends StatelessWidget {
 
@@ -32,6 +33,7 @@ class  Homepage extends StatelessWidget {
                     child: Text("Student/Faculty",style: TextStyle(color: Colors.white)),
                     onPressed: (){
                       // Navigator.of(context).pushNamed(LabOverview);
+                      Navigator.of(context).pushNamed(DeviceOverViewStudent.routeName);
 
                     },
                   ),

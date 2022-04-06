@@ -108,7 +108,7 @@ class MysearchDelegate extends SearchDelegate{
             GestureDetector(
               onTap: (){
                 Navigator.of(context).pushNamed(
-                  LabDetail.routename,
+                  DeviceDetail.routename,
                   arguments: result.id,);
               },
               child: ClipRRect(
@@ -150,7 +150,7 @@ class MysearchDelegate extends SearchDelegate{
           GestureDetector(
             onTap: (){
               Navigator.of(context).pushNamed(
-                LabDetail.routename,
+                DeviceDetail.routename,
                 arguments: result.id,);
             },
             child: ClipRRect(

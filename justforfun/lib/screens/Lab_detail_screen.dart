@@ -3,6 +3,7 @@ import 'package:justforfun/screens/Device_QR_code.dart';
 import 'package:provider/provider.dart';
 import 'package:justforfun/Provider/Devices.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:justforfun/Provider/Labs.dart';
 
 class LabDetail extends StatelessWidget {
   // final String title;
@@ -13,13 +14,13 @@ class LabDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     final Device_id = ModalRoute.of(context)?.settings.arguments as String;
 
-    final loadedProduct = Provider.of<Devices>(
+    final loadedProduct = Provider.of<Labs>(
       context,
       listen: false,
-    ).findById(Device_id);
+    ).findbyid(Device_id);
     return Scaffold(
       appBar: AppBar(
-        title: Text(loadedProduct.name),
+        title: Text(loadedProduct.labname),
       ),
       body: ListView(
         children: [
@@ -34,7 +35,7 @@ class LabDetail extends StatelessWidget {
                   child: Container(
                     margin: EdgeInsets.all(10),
                     child: Text(
-                      'Lab Name : ${loadedProduct.name}',
+                      'Lab Name : ${loadedProduct.labname}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           height: 1,
@@ -50,17 +51,14 @@ class LabDetail extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          'Lab id \: ${loadedProduct.id}',
+                          'Lab id \: ${loadedProduct.id.substring(1,7)}',
                           textAlign: TextAlign.start,
                           style: TextStyle(
                               height: 1,
                               fontSize: 20,
                               fontWeight: FontWeight.normal),
                         ),
-                        Spacer(),
-                        ElevatedButton(onPressed: (){
-                          Navigator.of(context).pushNamed(DeviceQRCode.routename ,arguments : loadedProduct.id);
-                        }, child: Text("Show QR Code"))
+
                       ],
                     ),
                   ),
@@ -70,7 +68,7 @@ class LabDetail extends StatelessWidget {
                   child: Container(
                     margin: EdgeInsets.all(10),
                     child: Text(
-                      'Working Status \: ${loadedProduct.workingstatus}',
+                      'Department \: ${loadedProduct.department}',
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           height: 1,
@@ -84,7 +82,7 @@ class LabDetail extends StatelessWidget {
                   child: Container(
                     margin: EdgeInsets.all(10),
                     child: Text(
-                      'Year of Bought \: ${loadedProduct.yearbought}',
+                      'Username \: ${loadedProduct.username}',
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           height: 1,
@@ -98,7 +96,7 @@ class LabDetail extends StatelessWidget {
                   child: Container(
                     margin: EdgeInsets.all(10),
                     child: Text(
-                      'Expiry Date \: ${loadedProduct.expiryDate}',
+                      'Password \: ${loadedProduct.password}',
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           height: 1,
@@ -107,48 +105,7 @@ class LabDetail extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text(
-                      'Supplier Name \: ${loadedProduct.supplierName}',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          height: 1,
-                          fontSize: 20,
-                          fontWeight: FontWeight.normal),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text(
-                      'Amc Deadline \: ${loadedProduct.AMCDeadline}',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          height: 1,
-                          fontSize: 20,
-                          fontWeight: FontWeight.normal),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text(
-                      'Device Category \: ${loadedProduct.categry}',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          height: 1,
-                          fontSize: 20,
-                          fontWeight: FontWeight.normal),
-                    ),
-                  ),
-                ),
+
               ],
             ),
           ),

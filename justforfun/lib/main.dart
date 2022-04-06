@@ -3,6 +3,7 @@ import 'package:justforfun/Provider/auth.dart';
 import 'package:justforfun/screens/Device_overview.dart';
 import 'package:justforfun/screens/Device_detail_screen.dart';
 import 'package:justforfun/Provider/Devices.dart';
+import 'package:justforfun/screens/Lab_detail_screen.dart';
 import 'package:justforfun/screens/QRcodeScanResult.dart';
 import 'package:justforfun/screens/QrcodeScanner.dart';
 import 'package:justforfun/screens/auth_screen_labadmin.dart';
@@ -16,7 +17,7 @@ import 'package:justforfun/screens/auth_screen_superadmin.dart';
 import 'package:justforfun/screens/LabOverview.dart';
 import 'package:justforfun/Provider/Labs.dart';
 import 'package:justforfun/Provider/auth.dart';
-
+import 'package:justforfun/screens/device_overviewforstudents.dart';
 void main() {
   runApp(MyApp());
 }
@@ -44,16 +45,19 @@ class MyApp extends StatelessWidget {
             // auth.is_auth ? LabOverview() :
             home: Homepage(),
             routes: {
+              DeviceOverViewStudent.routeName:(ctx)=>DeviceOverViewStudent(),
               LabOverView.routeName: (ctx) => LabOverView(),
               AuthScreensuper.routename: (ctx) => AuthScreensuper(),
               DeviceOverView.routeName: (ctx) => DeviceOverView(),
               AuthScreen.routename: (ctx) => AuthScreen(),
-              LabDetail.routename: (ctx) => LabDetail(),
+              DeviceDetail.routename: (ctx) => DeviceDetail(),
               EditLabScreen.routeName: (ctx) => EditLabScreen(),
               DeviceQRCode.routename: (ctx) => DeviceQRCode(),
               ScanQR.routename: (ctx) => ScanQR(),
               QrcodeResult.routename: (ctx) => QrcodeResult(),
               EditDeviceScreen.routeName: (ctx) => EditDeviceScreen(),
+              DeviceDetail.routename:(ctx)=>DeviceDetail(),
+              LabDetail.routename:(ctx)=>LabDetail(),
             },
           ),
         ));

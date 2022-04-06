@@ -47,7 +47,7 @@ class DeviceItem extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context)
-                            .pushNamed(LabDetail.routename, arguments: wlab.id);
+                            .pushNamed(DeviceDetail.routename, arguments: wlab.id);
                       },
                       child: RichText(
                         text: TextSpan(

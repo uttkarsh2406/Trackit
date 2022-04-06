@@ -23,7 +23,7 @@ class Devices with ChangeNotifier {
 
 
   Future<void> fetchdevice() async{
-    final url=Uri.parse('https://just-do-it-d98ab-default-rtdb.firebaseio.com/devices.json?auth=$authtoken');
+    final url=Uri.parse('https://just-do-it-d98ab-default-rtdb.firebaseio.com/devices.json');
     try {
       final value = await http.get(url);
       final List<Device>loaded_devices=[];

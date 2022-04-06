@@ -58,7 +58,7 @@ class Labs with ChangeNotifier{
         body: json.encode(
           {
             'labname': lab.labname,
-            'yearbought': lab.department,
+            'department': lab.department,
             'username': lab.username,
             'password': lab.password,
           },

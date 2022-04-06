@@ -149,7 +149,7 @@ class MysearchDelegate extends SearchDelegate{
             GestureDetector(
               onTap: (){
                 Navigator.of(context).pushNamed(
-                  LabDetail.routename,
+                  DeviceDetail.routename,
                   arguments: result.id,);
               },
               child: ClipRRect(
@@ -162,7 +162,7 @@ class MysearchDelegate extends SearchDelegate{
                     height: 200,
                     child: Row(
                       children: [
-                        Text('Device id: ${result.id}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                        Text('Device id: ${result.id.substring(1,6)}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
                         Spacer(),
                         Text('Device name : ${result.name}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
 
@@ -191,7 +191,7 @@ class MysearchDelegate extends SearchDelegate{
           GestureDetector(
             onTap: (){
               Navigator.of(context).pushNamed(
-                LabDetail.routename,
+                DeviceDetail.routename,
                 arguments: result.id,);
             },
             child: ClipRRect(

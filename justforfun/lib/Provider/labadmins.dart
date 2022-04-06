@@ -20,8 +20,9 @@ class LabAdmins with ChangeNotifier {
 
 
   Future<void> addadmin(LabAdmin admin) async {
+    print(43242342);
     final url = Uri.https(
-        'just-do-it-d98ab-default-rtdb.firebaseio.com', '/devices.json');
+        'just-do-it-d98ab-default-rtdb.firebaseio.com', '/labadmin.json');
     try {
       final value = await http.post(
         url,
