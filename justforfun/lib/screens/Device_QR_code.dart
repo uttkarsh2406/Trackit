@@ -21,26 +21,28 @@ class DeviceQRCode extends StatelessWidget {
       appBar: AppBar(
         title: Text('Device QR Code'),
       ),
-      body: Container(
-        child:
-          Column(
-            children: [
-              QrImage(
-                data: 'Lab Id : ${loadedProduct.id}\n  Lab Name : ${loadedProduct.name}\n Working Status : ${loadedProduct.workingstatus}\n Year Of Bought : ${loadedProduct.yearbought}\n Expiry Date : ${loadedProduct.expiryDate}\n Supplier Name : ${loadedProduct.supplierName}\n AMC Deadline : ${loadedProduct.AMCDeadline}\n Device Category : ${ loadedProduct.categry}',
-                version: QrVersions.auto,
-                size: 320,
-                gapless: false,
-                embeddedImage: AssetImage('assets/images/my_embedded_image.png'),
-                embeddedImageStyle: QrEmbeddedImageStyle(
-                  size: Size(80, 80),
+      body: Center(
+        child: Container(
+          child:
+            Column(
+              children: [
+                QrImage(
+                  data: 'Lab Id : ${loadedProduct.id}\n  Lab Name : ${loadedProduct.name}\n Working Status : ${loadedProduct.workingstatus}\n Year Of Bought : ${loadedProduct.yearbought}\n Expiry Date : ${loadedProduct.expiryDate}\n Supplier Name : ${loadedProduct.supplierName}\n AMC Deadline : ${loadedProduct.AMCDeadline}\n Device Category : ${ loadedProduct.categry}',
+                  version: QrVersions.auto,
+                  size: 320,
+                  gapless: false,
+                  embeddedImage: AssetImage('assets/images/my_embedded_image.png'),
+                  embeddedImageStyle: QrEmbeddedImageStyle(
+                    size: Size(80, 80),
+                  ),
                 ),
-              ),
-              ElevatedButton(onPressed: (){
-                Navigator.of(context).pop();
-              }, child: Text('Ok')),
-            ],
-          ),
+                ElevatedButton(onPressed: (){
+                  Navigator.of(context).pop();
+                }, child: Text('Ok')),
+              ],
+            ),
 
+        ),
       ),
     );
   }

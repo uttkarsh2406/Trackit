@@ -114,11 +114,12 @@ class _AuthCardState extends State<AuthCard> {
         if(_authData['email'].toString()=='uttkarshraj789@gmail.com' && _authData['password'].toString()=='123456') {
           await Provider.of<Auth>(context, listen: false).login(
             _authData['email'].toString(), _authData['password'].toString(),);
+          Navigator.of(context).pushNamed(LabOverView.routeName);
+
         }
         } else {
         // Sign user up
       }
-      Navigator.of(context).pushNamed(LabOverView.routeName);
 
     }on  HttpException catch(error){
       var error='Authenticate failed';

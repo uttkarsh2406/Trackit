@@ -155,7 +155,7 @@ class MysearchDelegate extends SearchDelegate{
               child: ClipRRect(
                 borderRadius : BorderRadius.circular(25),
                 child: Card(
-                  color: Colors.grey,
+                  color: Colors.white,
                   elevation: 10,
                   child: SizedBox(
                     width: double.infinity,
@@ -197,7 +197,7 @@ class MysearchDelegate extends SearchDelegate{
             child: ClipRRect(
               borderRadius : BorderRadius.circular(25),
               child: Card(
-                color: Colors.grey,
+                color: Colors.white,
                 elevation: 10,
                 child: SizedBox(
                   width: double.infinity,

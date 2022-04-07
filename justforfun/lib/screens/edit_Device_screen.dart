@@ -137,7 +137,7 @@ class _State extends State<EditDeviceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Lab'),
+        title: Text('Edit Device'),
         actions: [
           IconButton(
             onPressed: _saveform,

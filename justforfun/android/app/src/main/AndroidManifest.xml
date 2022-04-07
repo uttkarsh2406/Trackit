@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.justforfun">
    <application
-        android:label="justforfun"
+        android:label="Trackit"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

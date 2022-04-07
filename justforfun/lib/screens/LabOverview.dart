@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:justforfun/Provider/Device.dart';
+import 'package:justforfun/screens/Lab_detail_screen.dart';
 import 'package:justforfun/screens/QRcodeScanResult.dart';
 import 'package:justforfun/screens/QrcodeScanner.dart';
 import 'package:justforfun/screens/edit_lab_screen.dart';
@@ -15,6 +16,7 @@ import 'edit_Device_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:justforfun/Provider/Labs.dart';
 import 'package:http/http.dart' as http;
+import 'package:justforfun/Provider/lab.dart';
 class LabOverView extends StatefulWidget {
   static const routeName='/Laboverview';
 
@@ -52,8 +54,8 @@ class _LabOverViewtate extends State<LabOverView> {
   // _ScanQrode;
   @override
   Widget build(BuildContext context) {
-    final lab=Provider.of<Devices>(context);
-    List<Device> loadedDeviec=lab.items;
+    final lab=Provider.of<Labs>(context);
+    List<Lab> loadedDeviec=lab.items;
     return Scaffold(
       appBar: AppBar(
         title: Text('Trackit'),
@@ -76,7 +78,7 @@ class _LabOverViewtate extends State<LabOverView> {
 }
 
 class MysearchDelegate extends SearchDelegate{
-  List<Device> loaded_products;
+  List<Lab> loaded_products;
   MysearchDelegate({
     this.loaded_products,
   });
@@ -92,7 +94,7 @@ class MysearchDelegate extends SearchDelegate{
     return IconButton(onPressed: (){close(context,null);}, icon: Icon(Icons.arrow_back),);
   }
   Widget buildResults(BuildContext context){
-    List<Device>matchQuery=[
+    List<Lab>matchQuery=[
 
     ];
     for(var i in loaded_products){
@@ -102,7 +104,7 @@ class MysearchDelegate extends SearchDelegate{
     }
     if(matchQuery.length>0){
       return ListView.builder(itemCount: matchQuery.length,itemBuilder: (context,i,){
-        Device result=matchQuery[i];
+        Lab result=matchQuery[i];
         return Column(
           children: [
             GestureDetector(
@@ -114,16 +116,16 @@ class MysearchDelegate extends SearchDelegate{
               child: ClipRRect(
                 borderRadius : BorderRadius.circular(25),
                 child: Card(
-                  color: Colors.grey,
+                  color: Colors.white,
                   elevation: 10,
                   child: SizedBox(
                     width: double.infinity,
                     height: 200,
                     child: Row(
                       children: [
-                        Text('Device id: ${result.id}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                        Text('Device id: ${result.id.substring(1,5)}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
                         Spacer(),
-                        Text('Device name : ${result.name}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
+                        Text('Device name : ${result.labname}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
 
                       ],
                     ),
@@ -138,34 +140,34 @@ class MysearchDelegate extends SearchDelegate{
       });
     }
     for(var i in loaded_products){
-      if(i.name.toLowerCase().contains((query.toLowerCase()))){
+      if(i.labname.toLowerCase().contains((query.toLowerCase()))){
         matchQuery.add(i);
       }
 
     }
     return ListView.builder(itemCount: matchQuery.length,itemBuilder: (context,i,){
-      Device result=matchQuery[i];
+      Lab result=matchQuery[i];
       return Column(
         children: [
           GestureDetector(
             onTap: (){
               Navigator.of(context).pushNamed(
-                DeviceDetail.routename,
+                LabDetail.routename,
                 arguments: result.id,);
             },
             child: ClipRRect(
               borderRadius : BorderRadius.circular(25),
               child: Card(
-                color: Colors.grey,
+                color: Colors.white,
                 elevation: 10,
                 child: SizedBox(
                   width: double.infinity,
                   height: 200,
                   child: Row(
                     children: [
-                      Text('Device id: ${result.id}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                      Text('Device id: ${result.id.substring(1,5)}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
                       Spacer(),
-                      Text('Device name : ${result.name}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
+                      Text('Device name : ${result.labname}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
 
                     ],
                   ),
@@ -183,8 +185,8 @@ class MysearchDelegate extends SearchDelegate{
     List<String>matchQuery=[];
 
     for(var i in loaded_products){
-      if(i.name.toLowerCase().contains(query.toLowerCase())){
-        matchQuery.add(i.name);
+      if(i.labname.toLowerCase().contains(query.toLowerCase())){
+        matchQuery.add(i.labname);
       }
     }
     return ListView.builder(itemCount: matchQuery.length,itemBuilder: (context,i,){

@@ -110,11 +110,13 @@ class _AuthCardState extends State<AuthCard> {
     try {
       if (_authMode == AuthMode.Login) {
         // Log user in
-        await Provider.of<Auth>(context, listen: false).login(_authData['email'].toString(), _authData['password'].toString(),);
+        if((_authData['email']=='test@test.com' && _authData['password']=='123456') || (_authData['email']=='test1@test.com' && _authData['password']=='123456')|| (_authData['email']=='test2@test.com' && _authData['password']=='123456')|| (_authData['email']=='test3@test.com' && _authData['password']=='123456')) {
+          await Provider.of<Auth>(context, listen: false).login(_authData['email'].toString(), _authData['password'].toString(),);
+          Navigator.of(context).pushNamed(DeviceOverView.routeName);
+        }
       } else {
         // Sign user up
       }
-      Navigator.of(context).pushNamed(DeviceOverView.routeName);
 
     }on  HttpException catch(error){
       var error='Authenticate failed';
