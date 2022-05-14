@@ -51,8 +51,7 @@ class _State extends State<EditLabScreen> {
       Navigator.of(context).pop();
     } else {
       Provider.of<Labs>(context, listen: false)
-          .addLab(_editedLab).then((value) {Provider.of<LabAdmins>(context).addadmin(_editedadmin);},
-      )
+          .addLab(_editedLab)
           .catchError((error) {
         return showDialog(
           context: context,
